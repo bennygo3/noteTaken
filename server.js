@@ -17,13 +17,12 @@ app.get("/notes", (req, res) => {
 })
 
 
-
 app.get("/api/notes", (req, res) => {
-    // fs.readFile("./db/db.json", (err, data) => {
-    //     if(err) throw err;
-    //     const dbInfo = JSON.parse(data)
-    res.json(db)
-    // })
+    fs.readFile("./db/db.json", (err, data) => {
+        if(err) throw err;
+        const dbInfo = JSON.parse(data)
+        res.json(dbInfo)
+    })
 });
 
 //POST
@@ -37,11 +36,18 @@ app.post("/api/notes", (req, res) => {
 
 });
 
-// app.delete("/api/notes/:id", (req, res) => {
-//     const noteId = req.params.id;
-//     res.unlink(noteId, './db/db.json')
-//     res.readFile(noteId, './db/db.json')
-// });
+app.delete("/api/notes/:id", (req, res) => {
+    const noteId = req.params.id;
+    console.log(noteId)
+    for(i=0; i< db.length; i++){
+        if(db[i].id == noteId) {
+            db.splice(i, 1);
+        }
+    }
+    fs.writeFile("./db/db.json", JSON.stringify(db, null, 4), (err) => {
+        err ? console.log(err) : res.send(noteId)
+    })
+});
 
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, '/public/index.html'))
