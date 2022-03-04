@@ -21,3 +21,6 @@ This app was created to create, save and delete notes
 ## Contribute:
 
 If you would like to use or improve code, feel free to reach out to me via email: gobecodeme@gmail.com
+
+## Media:
+
